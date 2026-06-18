@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Bounds, Environment, useGLTF } from '@react-three/drei';
+import { Environment, useGLTF } from '@react-three/drei';
 
 import type { ClothingTransform } from '../../types/overlay';
 import type { Product } from '../../types/product';
@@ -32,16 +32,15 @@ export function ThreeOverlay({ product, enabled }: ThreeOverlayProps) {
         }}
       >
         <Canvas
-          camera={{ position: [0, 0, 5], fov: 35 }}
+          orthographic
+          camera={{ position: [0, 0, 5], zoom: 120 }}
           gl={{ alpha: true, antialias: true }}
           dpr={[1, 1.5]}
         >
           <ambientLight intensity={1.7} />
           <directionalLight position={[2, 3, 4]} intensity={2.2} />
           <Suspense fallback={null}>
-            <Bounds fit clip observe margin={1.1}>
-              <GarmentModel src={product.model} transform={transform} />
-            </Bounds>
+            <GarmentModel src={product.model} transform={transform} />
             <Environment preset="studio" />
           </Suspense>
         </Canvas>
