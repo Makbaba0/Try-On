@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Black Hoodie",
+    "image": "/products/hoodie.png",
+    "category": "hoodie",
+    "clothingBaseWidth": 512
+  },
+  {
+    "id": 2,
+    "name": "White T-Shirt",
+    "image": "/products/shirt.png",
+    "category": "shirt",
+    "clothingBaseWidth": 512
+  },
+  {
+    "id": 3,
+    "name": "Denim Jacket",
+    "image": "/products/jacket.png",
+    "category": "jacket",
+    "clothingBaseWidth": 512
+  }
+]
