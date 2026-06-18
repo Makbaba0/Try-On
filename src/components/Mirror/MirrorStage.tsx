@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { lazy, Suspense, useRef } from 'react';
 
 import { CanvasOverlay } from '../CanvasOverlay/CanvasOverlay';
 import { CameraView } from '../Camera/CameraView';
@@ -6,6 +6,10 @@ import { useCameraFps } from '../../hooks/useCameraFps';
 import { useCameraStream } from '../../hooks/useCameraStream';
 import { usePoseDetection } from '../../hooks/usePoseDetection';
 import { useMirrorStore } from '../../store/mirrorStore';
+
+const ThreeOverlay = lazy(() =>
+  import('../ThreeOverlay').then((module) => ({ default: module.ThreeOverlay })),
+);
 
 export function MirrorStage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -28,6 +32,11 @@ export function MirrorStage() {
   return (
     <div className="relative h-full min-h-[520px] w-full overflow-hidden rounded border border-mirror-border bg-black">
       <CameraView ref={videoRef} />
+      {selectedProduct?.model ? (
+        <Suspense fallback={null}>
+          <ThreeOverlay product={selectedProduct} enabled={cameraStatus === 'ready'} />
+        </Suspense>
+      ) : null}
       <CanvasOverlay ref={canvasRef} />
 
       {showOverlay ? (

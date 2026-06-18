@@ -30,8 +30,15 @@ export function ProductCard({ product, selected, onSelect }: ProductCardProps) {
       </span>
 
       <span className="min-w-0">
-        <span className="block truncate text-sm font-medium text-mirror-text">
-          {product.name}
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="truncate text-sm font-medium text-mirror-text">
+            {product.name}
+          </span>
+          {product.model ? (
+            <span className="rounded border border-mirror-accent/50 px-1.5 py-0.5 text-[10px] font-semibold text-mirror-accent">
+              3D
+            </span>
+          ) : null}
         </span>
         <span className="mt-1 block text-xs capitalize text-mirror-muted">
           {product.category}
