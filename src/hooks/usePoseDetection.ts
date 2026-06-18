@@ -97,13 +97,24 @@ export function usePoseDetection(
                 height,
                 clothingTransformRef.current,
               );
-              drawClothingOverlay(context, clothingImage, clothingTransformRef.current);
+              window.dispatchEvent(
+                new CustomEvent('tryon:clothing-transform', {
+                  detail: clothingTransformRef.current,
+                }),
+              );
+
+              if (!selectedProduct.model) {
+                drawClothingOverlay(context, clothingImage, clothingTransformRef.current);
+              }
             }
 
             drawPoseLandmarks(context, landmarks, width, height, metrics);
             updatePoseStatus('tracking');
           } else {
             clothingTransformRef.current = null;
+            window.dispatchEvent(
+              new CustomEvent('tryon:clothing-transform', { detail: null }),
+            );
             updatePoseStatus('lost');
           }
 

@@ -10,6 +10,7 @@
     "id": 2,
     "name": "White T-Shirt",
     "image": "/products/shirt.png",
+    "model": "/models/t-shirt.glb",
     "category": "shirt",
     "clothingBaseWidth": 512
   },
