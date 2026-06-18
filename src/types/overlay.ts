@@ -7,3 +7,21 @@ export interface ClothingTransform {
   rotation: number;
   opacity: number;
 }
+
+export interface ProductCalibration {
+  offsetX: number;
+  offsetY: number;
+  widthScale: number;
+  heightScale: number;
+  rotationOffset: number;
+}
+
+export type ProductCalibrationMap = Record<number, ProductCalibration>;
+
+export const DEFAULT_PRODUCT_CALIBRATION: ProductCalibration = {
+  offsetX: 0,
+  offsetY: 0,
+  widthScale: 1,
+  heightScale: 1,
+  rotationOffset: 0,
+};

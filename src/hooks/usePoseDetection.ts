@@ -12,6 +12,7 @@ import { clearCanvas, drawPoseLandmarks } from '../utils/poseDrawing';
 interface UsePoseDetectionOptions {
   enabled: boolean;
   selectedProduct: Product | null;
+  productCalibrations: import('../types/overlay').ProductCalibrationMap;
 }
 
 export function usePoseDetection(
@@ -91,6 +92,7 @@ export function usePoseDetection(
               clothingTransformRef.current = calculateClothingTransform(
                 metrics,
                 selectedProduct,
+                options.productCalibrations[selectedProduct.id],
                 width,
                 height,
                 clothingTransformRef.current,
@@ -132,6 +134,7 @@ export function usePoseDetection(
   }, [
     canvasRef,
     options.enabled,
+    options.productCalibrations,
     options.selectedProduct,
     setErrorMessage,
     setPoseStatus,

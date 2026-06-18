@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
+import { CalibrationPanel } from './CalibrationPanel';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { getProducts } from '../../services/productService';
 import { useMirrorStore } from '../../store/mirrorStore';
@@ -7,7 +8,14 @@ import { useMirrorStore } from '../../store/mirrorStore';
 export function ProductSidebar() {
   const products = useMemo(() => getProducts(), []);
   const selectedProduct = useMirrorStore((state) => state.selectedProduct);
+  const productCalibrations = useMirrorStore((state) => state.productCalibrations);
   const setSelectedProduct = useMirrorStore((state) => state.setSelectedProduct);
+  const updateProductCalibration = useMirrorStore(
+    (state) => state.updateProductCalibration,
+  );
+  const resetProductCalibration = useMirrorStore(
+    (state) => state.resetProductCalibration,
+  );
 
   useEffect(() => {
     if (!selectedProduct && products[0]) {
@@ -33,6 +41,17 @@ export function ProductSidebar() {
           />
         ))}
       </div>
+
+      {selectedProduct ? (
+        <CalibrationPanel
+          product={selectedProduct}
+          calibration={productCalibrations[selectedProduct.id]}
+          onChange={(calibration) =>
+            updateProductCalibration(selectedProduct.id, calibration)
+          }
+          onReset={() => resetProductCalibration(selectedProduct.id)}
+        />
+      ) : null}
     </aside>
   );
 }

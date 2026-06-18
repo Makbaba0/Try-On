@@ -13,12 +13,14 @@ export function MirrorStage() {
   const cameraStatus = useMirrorStore((state) => state.cameraStatus);
   const errorMessage = useMirrorStore((state) => state.errorMessage);
   const selectedProduct = useMirrorStore((state) => state.selectedProduct);
+  const productCalibrations = useMirrorStore((state) => state.productCalibrations);
 
   useCameraStream(videoRef);
   useCameraFps(videoRef);
   usePoseDetection(videoRef, canvasRef, {
     enabled: cameraStatus === 'ready',
     selectedProduct,
+    productCalibrations,
   });
 
   const showOverlay = cameraStatus !== 'ready';

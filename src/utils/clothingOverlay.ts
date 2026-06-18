@@ -1,4 +1,8 @@
-import type { ClothingTransform } from '../types/overlay';
+import {
+  DEFAULT_PRODUCT_CALIBRATION,
+  type ClothingTransform,
+  type ProductCalibration,
+} from '../types/overlay';
 import type { Product, ProductCategory, ProductFitOverrides } from '../types/product';
 import type { PoseMetrics } from '../types/pose';
 import { denormalizePoint } from './poseGeometry';
@@ -45,12 +49,17 @@ const AUTO_FIT_PROFILES: Record<ProductCategory, AutoFitProfile> = {
 export function calculateClothingTransform(
   metrics: PoseMetrics,
   product: Product,
+  calibration: ProductCalibration | undefined,
   frameWidth: number,
   frameHeight: number,
   previous: ClothingTransform | null,
 ): ClothingTransform {
   const neckCenter = denormalizePoint(metrics.neckCenter, frameWidth, frameHeight);
   const fit = resolveFitProfile(product.category, product.fit);
+  const resolvedCalibration = {
+    ...DEFAULT_PRODUCT_CALIBRATION,
+    ...calibration,
+  };
   const targetWidth = metrics.shoulderWidthPx * fit.shoulderMultiplier;
   const targetHeight = metrics.torsoHeightPx * fit.torsoMultiplier;
   const widthScale = targetWidth / product.clothingBaseWidth;
@@ -61,12 +70,15 @@ export function calculateClothingTransform(
   const height = clamp(targetHeight, width * 0.95, frameHeight * 0.88);
 
   const target: ClothingTransform = {
-    x: neckCenter.x,
-    y: neckCenter.y + metrics.torsoHeightPx * fit.yOffset,
-    width,
-    height,
+    x: neckCenter.x + metrics.shoulderWidthPx * resolvedCalibration.offsetX,
+    y:
+      neckCenter.y +
+      metrics.torsoHeightPx * fit.yOffset +
+      metrics.torsoHeightPx * resolvedCalibration.offsetY,
+    width: width * resolvedCalibration.widthScale,
+    height: height * resolvedCalibration.heightScale,
     anchorY: fit.anchorY,
-    rotation: metrics.torsoAngle,
+    rotation: metrics.torsoAngle + resolvedCalibration.rotationOffset,
     opacity: 1,
   };
 
