@@ -80,6 +80,11 @@ export function calculateClothingTransform(
     anchorY: fit.anchorY,
     rotation: metrics.torsoAngle + resolvedCalibration.rotationOffset,
     opacity: 1,
+    modelScale: resolvedCalibration.modelScale,
+    modelOffsetY: resolvedCalibration.modelOffsetY,
+    modelRotationX: resolvedCalibration.modelRotationX,
+    modelRotationY: resolvedCalibration.modelRotationY,
+    modelRotationZ: resolvedCalibration.modelRotationZ,
   };
 
   if (!previous) {
@@ -94,6 +99,11 @@ export function calculateClothingTransform(
     anchorY: lerp(previous.anchorY, target.anchorY, SMOOTHING),
     rotation: lerpAngle(previous.rotation, target.rotation, SMOOTHING),
     opacity: lerp(previous.opacity, target.opacity, SMOOTHING),
+    modelScale: lerp(previous.modelScale, target.modelScale, SMOOTHING),
+    modelOffsetY: lerp(previous.modelOffsetY, target.modelOffsetY, SMOOTHING),
+    modelRotationX: lerpAngle(previous.modelRotationX, target.modelRotationX, SMOOTHING),
+    modelRotationY: lerpAngle(previous.modelRotationY, target.modelRotationY, SMOOTHING),
+    modelRotationZ: lerpAngle(previous.modelRotationZ, target.modelRotationZ, SMOOTHING),
   };
 }
 

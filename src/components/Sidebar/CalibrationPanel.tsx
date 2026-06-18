@@ -85,6 +85,53 @@ export function CalibrationPanel({
           onChange={(rotationOffset) => onChange({ rotationOffset })}
           formatter={(value) => `${Math.round((value * 180) / Math.PI)}deg`}
         />
+        {product.model ? (
+          <div className="space-y-4 border-t border-mirror-border pt-4">
+            <CalibrationSlider
+              label="3D Model Scale"
+              min={0.2}
+              max={3}
+              step={0.01}
+              value={resolvedCalibration.modelScale}
+              onChange={(modelScale) => onChange({ modelScale })}
+            />
+            <CalibrationSlider
+              label="3D Model Yukari/Asagi"
+              min={-2}
+              max={2}
+              step={0.01}
+              value={resolvedCalibration.modelOffsetY}
+              onChange={(modelOffsetY) => onChange({ modelOffsetY })}
+            />
+            <CalibrationSlider
+              label="3D Rot X"
+              min={-Math.PI}
+              max={Math.PI}
+              step={0.01}
+              value={resolvedCalibration.modelRotationX}
+              onChange={(modelRotationX) => onChange({ modelRotationX })}
+              formatter={(value) => `${Math.round((value * 180) / Math.PI)}deg`}
+            />
+            <CalibrationSlider
+              label="3D Rot Y"
+              min={-Math.PI}
+              max={Math.PI}
+              step={0.01}
+              value={resolvedCalibration.modelRotationY}
+              onChange={(modelRotationY) => onChange({ modelRotationY })}
+              formatter={(value) => `${Math.round((value * 180) / Math.PI)}deg`}
+            />
+            <CalibrationSlider
+              label="3D Rot Z"
+              min={-Math.PI}
+              max={Math.PI}
+              step={0.01}
+              value={resolvedCalibration.modelRotationZ}
+              onChange={(modelRotationZ) => onChange({ modelRotationZ })}
+              formatter={(value) => `${Math.round((value * 180) / Math.PI)}deg`}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ export function ThreeOverlay({ product, enabled }: ThreeOverlayProps) {
           <directionalLight position={[2, 3, 4]} intensity={2.2} />
           <Suspense fallback={null}>
             <Bounds fit clip observe margin={1.1}>
-              <GarmentModel src={product.model} />
+              <GarmentModel src={product.model} transform={transform} />
             </Bounds>
             <Environment preset="studio" />
           </Suspense>
@@ -52,17 +52,22 @@ export function ThreeOverlay({ product, enabled }: ThreeOverlayProps) {
 
 interface GarmentModelProps {
   src: string;
+  transform: ClothingTransform;
 }
 
-function GarmentModel({ src }: GarmentModelProps) {
+function GarmentModel({ src, transform }: GarmentModelProps) {
   const gltf = useGLTF(src);
 
   return (
     <primitive
       object={gltf.scene}
-      position={[0, 0, 0]}
-      rotation={[0, 0, 0]}
-      scale={1}
+      position={[0, transform.modelOffsetY, 0]}
+      rotation={[
+        transform.modelRotationX,
+        transform.modelRotationY,
+        transform.modelRotationZ,
+      ]}
+      scale={transform.modelScale}
     />
   );
 }

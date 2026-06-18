@@ -6,6 +6,11 @@ export interface ClothingTransform {
   anchorY: number;
   rotation: number;
   opacity: number;
+  modelScale: number;
+  modelOffsetY: number;
+  modelRotationX: number;
+  modelRotationY: number;
+  modelRotationZ: number;
 }
 
 export interface ProductCalibration {
@@ -14,6 +19,11 @@ export interface ProductCalibration {
   widthScale: number;
   heightScale: number;
   rotationOffset: number;
+  modelScale: number;
+  modelOffsetY: number;
+  modelRotationX: number;
+  modelRotationY: number;
+  modelRotationZ: number;
 }
 
 export type ProductCalibrationMap = Record<number, ProductCalibration>;
@@ -24,4 +34,9 @@ export const DEFAULT_PRODUCT_CALIBRATION: ProductCalibration = {
   widthScale: 1,
   heightScale: 1,
   rotationOffset: 0,
+  modelScale: 1,
+  modelOffsetY: 0,
+  modelRotationX: 0,
+  modelRotationY: 0,
+  modelRotationZ: 0,
 };
